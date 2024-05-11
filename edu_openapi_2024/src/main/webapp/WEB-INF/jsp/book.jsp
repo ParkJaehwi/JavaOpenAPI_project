@@ -11,6 +11,7 @@
 			margin: 0;
 			padding: 0;
 		}
+
 		.container {
 			width: 50%;
 			margin: 50px auto;
