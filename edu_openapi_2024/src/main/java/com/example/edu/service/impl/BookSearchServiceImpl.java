@@ -4,8 +4,8 @@ import java.util.List;
 import java.util.Map;
 
 import com.example.edu.adapter.BookInfoSearchInterface;
-import com.example.edu.model.BookInfoVO;
-import com.example.edu.model.BookSearchResultVO;
+import com.example.edu.model.FoodInfoVO;
+import com.example.edu.model.FoodSearchResultVO;
 import com.example.edu.service.BookSearchService;
 
 import org.springframework.stereotype.Service;
@@ -20,15 +20,15 @@ public class BookSearchServiceImpl implements BookSearchService {
 	BookInfoSearchInterface bookSearchInterface = new BookInfoSearchInterface();
 	
 	@Override
-	public List<BookInfoVO> searchBookList (String url, Map<String, String> requestHeaders) throws Exception {
+	public List<FoodInfoVO> searchBookList (String url, Map<String, String> requestHeaders) throws Exception {
 		
 		String responseBody =  bookSearchInterface.getBookInfo(url, requestHeaders);
         ObjectMapper mapper = new ObjectMapper();
-        BookSearchResultVO resultVO  = null;
+        FoodSearchResultVO resultVO  = null;
         
         try {
         	
-        	resultVO = mapper.readValue(responseBody, BookSearchResultVO.class);
+        	resultVO = mapper.readValue(responseBody, FoodSearchResultVO.class);
 
         } catch (JsonMappingException e) {
         	throw new Exception("JSON 에러 : " + e);
@@ -36,11 +36,11 @@ public class BookSearchServiceImpl implements BookSearchService {
         	throw new Exception("JSON 에러 : " + e);
         }
         
-        List<BookInfoVO> books =resultVO.getItems();
+        List<FoodInfoVO> books =resultVO.getItems();
             
         
         for (int i=0 ; i < books.size(); i++) {
-           	BookInfoVO bookInfo = books.get(i);
+           	FoodInfoVO bookInfo = books.get(i);
            	System.out.println(i+" ==> "+bookInfo.getTitle());
         }
        
