@@ -14,6 +14,5 @@ public class Food {
     private String NUTR_CONT9;
     private String BGN_YEAR;
     private String ANIMAL_PLANT;
-
-    // 생성자, getter 및 setter
 }
+//사용안함

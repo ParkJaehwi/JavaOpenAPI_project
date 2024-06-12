@@ -1,56 +1,3 @@
-<%--<%@ page contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>--%>
-<%--<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>--%>
-<%--<!DOCTYPE html>--%>
-<%--<html>--%>
-<%--<head>--%>
-<%--    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />--%>
-<%--    <title>Book Search</title>--%>
-<%--</head>--%>
-<%--<body>--%>
-<%--<h3>공공데이터 API를 활용한 도서 목록 검색결과</h3>--%>
-<%--		<a href="/food">돌아가기</a>--%>
-
-<%--<table border="1">--%>
-<%--    <thead>--%>
-<%--    <tr>--%>
-<%--        <th>식품명</th>--%>
-<%--        <th>1회제공량 (g)</th>--%>
-<%--        <th>열량 (kcal)</th>--%>
-<%--        <th>탄수화물 (g)</th>--%>
-<%--        <th>단백질 (g)</th>--%>
-<%--        <th>지방 (g)</th>--%>
-<%--        <th>당류 (g)</th>--%>
-<%--        <th>나트륨 (mg)</th>--%>
-<%--    </tr>--%>
-<%--    </thead>--%>
-<%--    <tbody>--%>
-<%--    <c:forEach items="${books}" var="book">--%>
-<%--        <tr>--%>
-<%--            <td>${book.descKor}</td>--%>
-<%--            <td>${book.servingWt}</td>--%>
-<%--            <td>${book.nutrCont1}</td>--%>
-<%--            <td>${book.nutrCont2}</td>--%>
-<%--            <td>${book.nutrCont3}</td>--%>
-<%--            <td>${book.nutrCont4}</td>--%>
-<%--            <td>${book.nutrCont5}</td>--%>
-<%--            <td>${book.nutrCont6}</td>--%>
-
-<%--        </tr>--%>
-<%--    </c:forEach>--%>
-<%--    </tbody>--%>
-<%--</table>--%>
-<%--<script>--%>
-<%--    // errorMessage 변수를 가져와서 alert 창을 띄웁니다.--%>
-<%--    var errorMessage = "${errorMessage}";--%>
-<%--    if(errorMessage !== "") {--%>
-<%--        alert(errorMessage);--%>
-<%--        // 이전 페이지로 이동합니다. (history.back() 메서드를 사용합니다.)--%>
-<%--        history.back();--%>
-<%--    }--%>
-<%--</script>--%>
-<%--</body>--%>
-<%--</html>--%>
-
 <%@ page contentType="text/html; charset=utf-8" pageEncoding="utf-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
@@ -84,7 +31,7 @@
         }
 
         .container {
-            width: 80%;
+            width: 90%;
             margin: 50px auto;
             background-color: #fff;
             border-radius: 10px;
@@ -130,8 +77,11 @@
         }
 
 
+        .index {
+            width: 5%;
+        }
         .search_container {
-            width: 80%;
+            width: 90%;
             margin: 50px auto;
             background-color: #aff8b2;
             border-radius: 10px;
@@ -180,7 +130,6 @@
         .table_row:hover {
             border: 3px solid dodgerblue;
             font-size: large;
-            /*font-weight: bolder;*/
 
         }
 
@@ -208,11 +157,6 @@
             color: white;
         }
 
-        /*.bg {*/
-        /*    background: url("./images/tree3.png");*/
-        /*    background-repeat: no-repeat;*/
-        /*    background-size: cover;*/
-        /*}*/
     </style>
 
 
@@ -233,12 +177,12 @@
 
         <br><br><br>
 
-        <h3>📜 식품 영양 성분 검색 결과 </h3> (총 검색결과: <span id="totalCount">${totalCount}</span>)
-        <%--    <a href="/food">돌아가기</a>--%>
+        <h3>📜 식품 영양 성분 검색 결과 </h3> ( <strong><u>${param.keyword}</u></strong>에 대한 검색결과: <span id="totalCount">${totalCount} 개</span> )
 
         <table>
             <thead>
             <tr>
+                <th>순번</th>
                 <th>식품명</th>
                 <th>1회 제공량 (g)</th>
                 <th>열량 (kcal)</th>
@@ -250,16 +194,17 @@
             </tr>
             </thead>
             <tbody>
-            <c:forEach items="${foods}" var="food">
+            <c:forEach items="${foods}" var="food" varStatus="status">
                 <tr class="table_row">
+                    <td class="food_name index">${(status.index + 1)  + ((currentPage-1)*20)}</td>
                     <td class="food_name attribute_width">${food.descKor}</td>
-                    <td class="attribute_width">${food.servingWt}</td>
-                    <td class="attribute_width">${food.nutrCont1}</td>
-                    <td class="attribute_width">${food.nutrCont2}</td>
-                    <td class="attribute_width">${food.nutrCont3}</td>
-                    <td class="attribute_width">${food.nutrCont4}</td>
-                    <td class="attribute_width">${food.nutrCont5}</td>
-                    <td class="attribute_width">${food.nutrCont6}</td>
+                    <td class="attribute_width servingWt">${food.servingWt}</td>
+                    <td class="attribute_width n1">${food.nutrCont1}</td>
+                    <td class="attribute_width n2">${food.nutrCont2}</td>
+                    <td class="attribute_width n3">${food.nutrCont3}</td>
+                    <td class="attribute_width n4">${food.nutrCont4}</td>
+                    <td class="attribute_width n5">${food.nutrCont5}</td>
+                    <td class="attribute_width n6">${food.nutrCont6}</td>
                 </tr>
             </c:forEach>
             </tbody>
@@ -267,24 +212,19 @@
         <br><br>
         <center>
             <div id="pagination">
-                <%-- 이전 페이지로 이동하는 링크 --%>
                 <c:if test="${currentPage > 1}">
                     <a href="/foodsearch?keyword=${param.keyword}&page=${currentPage - 1}">이전</a>
                 </c:if>
-                <%-- 페이지 번호를 표시하는 링크 --%>
                 <c:forEach begin="1" end="${totalPages}" var="pageNumber">
                     <c:choose>
-                        <%-- 현재 페이지 번호는 링크로 만들지 않음 --%>
                         <c:when test="${pageNumber == currentPage}">
                             <span class="active">${pageNumber}</span>
                         </c:when>
-                        <%-- 다른 페이지 번호는 링크로 만듦 --%>
                         <c:otherwise>
                             <a href="/foodsearch?keyword=${param.keyword}&page=${pageNumber}">${pageNumber}</a>
                         </c:otherwise>
                     </c:choose>
                 </c:forEach>
-                <%-- 다음 페이지로 이동하는 링크 --%>
                 <c:if test="${currentPage < totalPages}">
                     <a href="/foodsearch?keyword=${param.keyword}&page=${currentPage + 1}">다음</a>
                 </c:if>
@@ -307,8 +247,27 @@
     console.log(errorMessage);
     if (errorMessage !== "") {
         alert(errorMessage);
-        history.back();
     }
+
+    document.addEventListener("DOMContentLoaded", function() {
+        document.querySelectorAll(".table_row").forEach(function(row) {
+            var tds = row.querySelectorAll("td");
+            var tdTexts = [];
+            tds.forEach(function(td) {
+                tdTexts.push(td.innerText);
+            });
+
+            const dailyNtrTotal = [2000, 324, 55, 54, 100, 2000]; // 각 영양 성분의 하루 일일섭취량
+
+            for (let i = 3; i < tds.length; i++) {
+                let nutrientContent = parseFloat(tdTexts[i]);
+                if (!isNaN(nutrientContent)) {
+                    let percentage = (nutrientContent / dailyNtrTotal[i - 3]) * 100;
+                    tds[i].innerText += " (" + percentage.toFixed(1) + "%)";
+                }
+            }
+        });
+    });
 
 </script>
 </body>

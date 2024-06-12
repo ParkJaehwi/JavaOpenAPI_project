@@ -35,6 +35,6 @@ public class FoodData {
         private String NUTR_CONT5;
         private String NUTR_CONT6;
 
-        // Getters and setters...
     }
 }
+//사용안함
